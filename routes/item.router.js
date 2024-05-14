@@ -3,17 +3,24 @@ import Item from '../schemas/item.schema.js';
 
 const router = express.Router();
 
-router.post('/item', async (req, res) =>
+router.post('/item', async (req, res, next) =>
 {
-	const { name, code, stat } = req.body;
-	if (!name || !code || !stat)
-		return res.status(400).json({ errorMessage: '누락된 정보가 있습니다.' });
+	try
+	{
+		const { name, code, stat } = req.body;
+		if (!name || !code || !stat)
+			return res.status(400).json({ errorMessage: '누락된 정보가 있습니다.' });
 
-	const item = new Item({ name, code, stat });
+		const item = new Item({ name, code, stat });
 
-	await item.save();
+		await item.save();
 
-	return res.status(201).json({ item });
+		return res.status(201).json({ item });
+	}
+	catch (error)
+	{
+		next(error);
+	}
 });
 
 router.patch('/item/:itemCode', async (req, res) =>
