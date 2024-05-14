@@ -1,21 +1,30 @@
 import express from 'express';
 import Character from '../schemas/character.schema.js';
+import Joi from 'joi';
 
 const router = express.Router();
 
-router.post('/character', async (req, res) =>
+const createCharacterSchema = Joi.object({
+	name: Joi.string().min(1).max(16).required(),
+});
+
+router.post('/character', async (req, res, next) =>
 {
-	const { name } = req.body;
-	if (!name)
-		return res.status(400).json({ errorMessage: '캐릭터 이름 데이터가 존재하지 않습니다.' });
+	try
+	{
+		const { name } = await createCharacterSchema.validateAsync(req.body);
+		const CharacterMaxId = await Character.findOne().sort('-characterId').exec();
+		const characterId = CharacterMaxId ? CharacterMaxId.characterId + 1 : 1;
+		const character = new Character({ name, characterId, health: 500, power: 100 });
 
-	const CharacterMaxId = await Character.findOne().sort('-characterId').exec();
-	const characterId = CharacterMaxId ? CharacterMaxId.characterId + 1 : 1;
-	const character = new Character({ name, characterId, health: 500, power: 100 });
+		await character.save();
 
-	await character.save();
-
-	return res.status(201).json({ character });
+		return res.status(201).json({ character });
+	}
+	catch (error)
+	{
+		next(error);
+	}
 });
 
 router.get('/character/:characterId', async (req, res) =>
