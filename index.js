@@ -1,5 +1,6 @@
 import express from 'express';
 import connect from "./schemas/index.js";
+import CharacterRouter from "./routes/character.router.js";
 
 const app = express();
 const PORT = 3000;
@@ -16,7 +17,7 @@ router.get('/', (req, res) =>
 	return res.json({ message: 'Hi!' });
 });
 
-app.use('/api', [router]);
+app.use('/api', [router, CharacterRouter]);
 
 app.listen(PORT, () =>
 {
