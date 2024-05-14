@@ -18,6 +18,10 @@ const CharacterSchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 	},
+	equipment: {
+		type: Array,
+		required: false,
+	}
 });
 
 export default mongoose.model('Character', CharacterSchema);
