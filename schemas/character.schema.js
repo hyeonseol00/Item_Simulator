@@ -4,8 +4,9 @@ const CharacterSchema = new mongoose.Schema({
 	name: {
 		type: String,
 		required: true,
+		unique: true
 	},
-	id: {
+	characterId: {
 		type: Number,
 		required: true,
 	},

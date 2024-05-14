@@ -1,18 +1,43 @@
 import express from 'express';
-import Todo from '../schemas/todo.schema.js';
+import Character from '../schemas/character.schema.js';
 
 const router = express.Router();
 
-router.post('/item', async (req, res) =>
+router.post('/character', async (req, res) =>
 {
 	const { name } = req.body;
-	const itemMaxCode = await Todo.findOne().sort('-code').exec();
-	const code = itemMaxCode ? itemMaxCode.order + 1 : 1;
-	const item = new Todo({ name, code });
+	if (!name)
+		return res.status(400).json({ errorMessage: '캐릭터 이름 데이터가 존재하지 않습니다.' });
 
-	await item.save();
+	const CharacterMaxId = await Character.findOne().sort('-characterId').exec();
+	const characterId = CharacterMaxId ? CharacterMaxId.characterId + 1 : 1;
+	const character = new Character({ name, characterId, health: 500, power: 100 });
 
-	return res.status(201).json({ item });
+	await character.save();
+
+	return res.status(201).json({ character });
+});
+
+router.get('/character/:characterId', async (req, res) =>
+{
+	const { characterId } = req.params;
+	const character = await Character.findOne({ characterId: characterId }).exec();
+	if (!character)
+		return res.status(404).json({ errorMessage: '존재하지 않는 캐릭터입니다.' });
+
+	return res.status(200).json({ name: character["name"], health: character["health"], power: character["power"] });
+});
+
+router.delete('/character/:characterId', async (req, res) =>
+{
+	const { characterId } = req.params;
+	const character = await Character.findOne({ characterId: characterId }).exec();
+	if (!character)
+		return res.status(404).json({ errorMessage: '존재하지 않는 캐릭터입니다.' });
+
+	await Character.deleteOne({ characterId: characterId }).exec();
+
+	return res.status(200).json({});
 });
 
 export default router;
