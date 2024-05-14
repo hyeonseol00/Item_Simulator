@@ -4,14 +4,16 @@ const ItemSchema = new mongoose.Schema({
 	name: {
 		type: String,
 		required: true,
+		unique: true
 	},
 	code: {
 		type: Number,
 		required: true,
+		unique: true
 	},
 	stat: {
 		type: Object,
-		required: false,
+		required: true,
 	},
 });
 
