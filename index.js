@@ -1,7 +1,10 @@
 import express from 'express';
+import connect from "./schemas/index.js";
 
 const app = express();
 const PORT = 3000;
+
+connect();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
