@@ -57,13 +57,6 @@ router.get("/character/:characterId/equipment", async (req, res) =>
 	if (!character)
 		return res.status(404).json({ errorMessage: '존재하지 않는 캐릭터입니다.' });
 
-	/* 	const answer = [];
-		character["equipment"].forEach(async itemCode =>
-		{
-			const item = await Item.findOne({ code: itemCode }).exec();
-			answer.push({ item_code: itemCode, item_name: item["name"] });
-		}); */
-
 	const answer = [];
 	const promises = character["equipment"].map(async itemCode =>
 	{
