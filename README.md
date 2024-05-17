@@ -15,7 +15,7 @@ Node.js, Express.js, yarn, MongoDB / mongoose, AWS EC2, PM2
 |기능|API URL|Method|Request|Response|
 |---|---|---|---|---|
 |캐릭터 생성|/api/character|POST|{<br>&emsp;"name": "엘다하르"<br>}|{<br>&emsp;"characterId": 7<br>}|
-|캐릭터 삭제|/api/character/:characterId|DELETE|{<br>&emsp;"name": "수정해야돼"<br>}|{<br>&emsp;"characterId": 7<br>}|
+|캐릭터 삭제|/api/character/:characterId|DELETE|{ }|{ }|
 |캐릭터 조회|/api/character/:characterId|GET|{ }|{<br>&emsp;"name": "엘다하르",<br>&emsp;"health": 500,<br>&emsp;"power": 100<br>}|
 |아이템 생성|/api/item|POST|{<br>&emsp;"name": "온전한 수정 하니와",<br>&emsp;"code": 6,<br>&emsp;"stat": {<br>&emsp;&emsp;"health": 30,<br>&emsp;&emsp;"power": 2<br>&emsp;}<br>}|{<br>&emsp;"name": "온전한 수정 하니와",<br>&emsp;"code": 6,<br>&emsp;"stat": {<br>&emsp;&emsp;"health": 30,<br>&emsp;&emsp;"power": 2<br>&emsp;}<br>}|
 |아이템 수정|/api/item/:itemCode|PATCH|{<br>&emsp;"name": "인피니티 건틀렛 (+1)",<br>&emsp;"stat": {<br>&emsp;&emsp;"health": 100,<br>&emsp;&emsp;"power": 202<br>&emsp;}<br>}|{ }|
